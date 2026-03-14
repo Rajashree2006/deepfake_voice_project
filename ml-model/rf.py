@@ -131,3 +131,11 @@ importance = pd.DataFrame({
 }).sort_values(by="Importance", ascending=False)
 
 importance.head(10)
+
+
+import joblib
+
+joblib.dump(rf, "voice_model.pkl")
+joblib.dump(scaler, "scaler.pkl")
+
+print("Model saved")
