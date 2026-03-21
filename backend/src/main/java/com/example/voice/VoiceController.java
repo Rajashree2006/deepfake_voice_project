@@ -82,14 +82,85 @@
 //     }
 // }
 
+// package com.example.voice;
+
+// import java.io.BufferedReader;
+// import java.io.File;
+// import java.io.InputStreamReader;
+
+// import org.springframework.web.bind.annotation.CrossOrigin;
+// import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.RequestParam;
+// import org.springframework.web.bind.annotation.RestController;
+// import org.springframework.web.multipart.MultipartFile;
+
+// @RestController
+// @CrossOrigin("*")
+// public class VoiceController {
+
+//     @PostMapping("/detect")
+//     public String detect(@RequestParam("file") MultipartFile file) {
+
+//         try {
+
+//             File tempFile = File.createTempFile("audio_", ".wav");
+//             file.transferTo(tempFile);
+
+//             ProcessBuilder pb = new ProcessBuilder(
+//                 "C:\\Users\\KIIT0001\\anaconda3\\envs\\hybrid_env\\python.exe",
+//                 "C:\\Users\\KIIT0001\\Downloads\\deepfake_voice_project\\ml-model\\predict_hybrid.py",
+//                 tempFile.getAbsolutePath()
+//             );
+
+//             pb.redirectErrorStream(true);
+
+//             Process process = pb.start();
+
+//             BufferedReader reader = new BufferedReader(
+//                 new InputStreamReader(process.getInputStream())
+//             );
+
+//            String line;
+//            String jsonOutput = "";
+
+//          while ((line = reader.readLine()) != null) {
+//             System.out.println("Python: " + line);
+
+//     // ✅ capture ONLY JSON line
+//     if (line.trim().startsWith("{") && line.trim().endsWith("}")) {
+//         jsonOutput = line;
+//     }
+// }
+
+// return jsonOutput;
+
+//             process.waitFor();
+//             tempFile.delete();
+
+//             // ✅ RETURN JSON
+//             return output.toString();
+
+//         } catch (Exception e) {
+//             e.printStackTrace();
+//             return "{\"error\":\"Error processing audio\"}";
+//         }
+//     }
+// }
+
+
+
+
 package com.example.voice;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @CrossOrigin("*")
@@ -100,54 +171,43 @@ public class VoiceController {
 
         try {
 
-            // 1️⃣ Create temporary file
             File tempFile = File.createTempFile("audio_", ".wav");
-
-            // 2️⃣ Save uploaded audio to temp file
             file.transferTo(tempFile);
 
-            // 3️⃣ Run Python model
             ProcessBuilder pb = new ProcessBuilder(
-                    "python",
-                    "../ml-model/predict.py",
-                    tempFile.getAbsolutePath()
+                "C:\\Users\\KIIT0001\\anaconda3\\envs\\hybrid_env\\python.exe",
+                "C:\\Users\\KIIT0001\\Downloads\\deepfake_voice_project\\ml-model\\predict_hybrid.py",
+                tempFile.getAbsolutePath()
             );
 
             pb.redirectErrorStream(true);
 
             Process process = pb.start();
 
-            // 4️⃣ Read Python output
             BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream())
+                new InputStreamReader(process.getInputStream())
             );
 
-            // String result = reader.readLine();
             String line;
-String result = "";
+            String jsonOutput = "";
 
-while ((line = reader.readLine()) != null) {
-    System.out.println("Python: " + line);
-    result = line;   // last line should be prediction
-}
+            while ((line = reader.readLine()) != null) {
+                System.out.println("Python: " + line);
 
-            process.waitFor();
-
-            // 5️⃣ Delete temp file
-            tempFile.delete();
-
-            // 6️⃣ Return prediction
-            if ("0".equals(result)) {
-                return "REAL VOICE";
-            } else if ("1".equals(result)) {
-                return "FAKE VOICE";
-            } else {
-                return "Prediction Error";
+                // ✅ capture ONLY JSON line
+                if (line.trim().startsWith("{") && line.trim().endsWith("}")) {
+                    jsonOutput = line;
+                }
             }
+
+            process.waitFor();   // ✅ WAIT FIRST
+            tempFile.delete();  // ✅ CLEAN FILE
+
+            return jsonOutput;  // ✅ RETURN JSON ONLY
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "Error processing audio";
+            return "{\"error\":\"Error processing audio\"}";
         }
     }
 }

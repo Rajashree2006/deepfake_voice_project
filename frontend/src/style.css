@@ -181,3 +181,110 @@ gap:10px;
 justify-content:center;
 margin-bottom:20px;
 }
+
+
+
+
+
+
+
+
+/* 
+.dashboard{
+width:90%;
+max-width:900px;
+margin-top:20px;
+animation:fadeIn 1s ease;
+}
+
+.card{
+padding:20px;
+font-size:28px;
+border-radius:15px;
+margin-bottom:20px;
+text-align:center;
+transition:0.3s;
+}
+
+.card.fake{
+background:rgba(255,0,0,0.1);
+color:#ff4c4c;
+box-shadow:0 0 20px rgba(255,0,0,0.8);
+border:2px solid #ff4c4c;
+}
+
+.card.real{
+background:rgba(0,255,120,0.1);
+color:#00ff9d;
+box-shadow:0 0 20px rgba(0,255,120,0.8);
+border:2px solid #00ff9d;
+}
+
+.waveform{
+width:90%;
+max-width:800px;
+margin:20px auto;
+padding:10px;
+background:rgba(0,0,0,0.3);
+border-radius:10px;
+box-shadow:0 0 20px rgba(0,170,255,0.4);
+}
+
+
+.recharts-wrapper{
+margin-top:10px;
+}
+
+h3{
+margin-top:20px;
+color:#00aaff;
+letter-spacing:1px;
+}
+
+.confidence{
+height:12px;
+background:rgba(255,255,255,0.1);
+border-radius:10px;
+margin:20px 0;
+overflow:hidden;
+}
+
+.confidence-fill{
+height:100%;
+background:linear-gradient(90deg,#00ff9d,#00aaff);
+transition:width 1s ease;
+box-shadow:0 0 10px #00aaff;
+}
+
+
+.card:hover{
+transform:scale(1.03);
+}
+
+svg{
+filter: drop-shadow(0px 0px 5px #00aaff);
+} */
+
+
+.wave {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.wave span {
+  width: 6px;
+  height: 20px;
+  background: #1E90FF;
+  animation: bounce 1s infinite ease-in-out;
+}
+
+.wave span:nth-child(2) { animation-delay: 0.1s; }
+.wave span:nth-child(3) { animation-delay: 0.2s; }
+.wave span:nth-child(4) { animation-delay: 0.3s; }
+.wave span:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1.4); }
+}
